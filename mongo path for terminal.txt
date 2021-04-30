@@ -1,0 +1,72 @@
+"C:\Program Files\MongoDB\Server\4.4\bin\mongo.exe"
+
+
+db.product.insert([
+{_id:11, item:'pencil' , qty:100},
+{ item:'pencil' , qty:100},
+{ item:'pencil' , qty:100}
+])
+
+
+db.product.insertMany([
+{"_id":1,
+"item": "TBD",
+"stock":1,
+"info":{"publisher":"1111", "pages":430},
+"tags":["technology", "computer"],
+"rating":[{"by":'afsan', "rating":4}, {"by":'xyz' , "rating":4.5}],
+"recorder":false,
+},
+{
+"_id":2,
+"item": "xyz123",
+"stock":15,
+"stock":{"publisher":"5555", "pages":150},
+"tags":[],
+"rating":[{"by":'xyz', "rating":4}],
+"recorder":false,
+}
+])
+
+
+!pip install pymongo
+
+#import the pymongo pakage
+import pymongo
+
+#connect to the locally running MongoDB Instance
+db_conn = pymongo.MongoClient("mongodb://127.0.0.1:27017") # pakage which enables us to connect to the mongo db
+
+#show all databases
+print(db_conn.list_database_names())
+
+db_name = 'demoDB'
+db = db_conn[db_name]
+#if the database is not present it will create a new one
+#connecting to database named demoDB present in mongodb
+
+
+#connecting to a collection
+collection_name = 'mongo_demo'
+collection = db[collection_name]
+
+
+if collection_name in db.list_collection_names():
+    print('collection exist')
+else:
+    print('collection does not exist')
+
+
+#inserting a new row into a collection
+my_row = {'Serial No': '9998',
+         'GRE SCORE' : '337',
+          'UNI RATING':'4',
+          'SOP': '4.5',
+          'LOR': '4.5',
+          'CGPA': '9.65',
+          'RESEARCH': '1',
+          'Chance of admit': '0.92'} # Creating key value pairs for inserting into the db
+
+
+x = collection.insert_one(my_row) 
+## inserting records into collection
